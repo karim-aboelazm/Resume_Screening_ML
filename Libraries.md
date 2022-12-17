@@ -1,5 +1,5 @@
 # Project : Resume Screening Using Machine Learning
-# AUTHOR : Karim Mohammed Aboelazm :+1:
+# Authur : Karim Mohammed Aboelazm :+1:
 # Date : 09/2022
 # ORG : Obour Academy
 ------
