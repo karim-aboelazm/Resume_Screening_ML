@@ -1,0 +1,37 @@
+<!--
+
+            ------------------------------------------------------------
+            |                   Aknowledgement                         |
+            |----------------------------------------------------------|
+            |   Project Name : Resume Screening Using Machine Learning |
+            |   Coded By : Eng. Karim Mohammed Aboelazm                |
+            |   Organization : Obour University                        |
+            |----------------------------------------------------------|
+-->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+   
+   <head>
+      <title>Resume Screening</title>
+      {% include 'snippets/head.html' %}
+   </head>
+
+   <body class="main-layout" data-bs-spy="scroll" data-bs-target="#navbar-example2">
+      <!-- loader  -->
+      <div class="loader_bg">
+         <div class="loader"><img src="{% static '' %}images/loading.gif" alt="#" /></div>
+      </div>
+     
+      {% block content %}
+      
+      {% endblock %}
+      {% include 'snippets/footer.html' %}
+      {% include 'snippets/scripts.html' %}
+      <script>
+         const scrollSpy = new bootstrap.ScrollSpy(document.body, {
+            target: '#navbar-example'
+          })
+      </script>
+   </body>
+</html>

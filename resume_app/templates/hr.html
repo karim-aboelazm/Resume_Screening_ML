@@ -1,0 +1,73 @@
+<!--
+
+            ------------------------------------------------------------
+            |                   Aknowledgement                         |
+            |----------------------------------------------------------|
+            |   Project Name : Resume Screening Using Machine Learning |
+            |   Coded By : Eng. Karim Mohammed Aboelazm                |
+            |   Organization : Obour University                        |
+            |----------------------------------------------------------|
+-->
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+{% include 'snippets/header_hr.html' %}
+<section class="banner_main" id="home">
+  <div class="container">
+     <div class="row">
+        <div class="col-md-7 col-lg-7">
+           <div class="text-bg">
+              <h1>Hi ... <br>My Name Is {{request.user.hr.full_name}}</h1>
+              <span>I am an Human resourcer in Company</span>
+            </div>
+        </div>
+        <div class="col-md-5 col-lg-5">
+           <div class="ban_img">
+              <figure><img src="{% static '' %}images/ba_ing.png" alt="#" /></figure>
+           </div>
+        </div>
+     </div>
+  </div>
+</section>
+<div class="container">
+  <h2 class="my-5 text-center" style="text-align: center;color:#032154; font-size: 30px;font-weight: 700;">All Job Applicants Info</h2>
+    <div class="row mt-5">
+        <div class="col-md-10 mx-auto">
+            <form action="{% url 'resume_app:hr' %}">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="keyword" placeholder="Searching For Applicants With Jop Name .." aria-label="Search.." aria-describedby="button-addon2" style="border:1px solid;">
+                    <button class="btn btn-primary btn-lg" type="submit" id="button-addon2"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-5" id="table_of_result">
+        <div class="col-md-10 mx-auto card" style="border-radius:20px;">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center" scope="col">SN</th>
+                    <th class="text-center" scope="col">Applicant Email</th>
+                    <th class="text-center" scope="col">Resume Score</th>
+                    <th class="text-center" scope="col">Prediction Job</th>
+                    <th class="text-center" scope="col">View Resume</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for cva in resume_analysis  %}
+                  <tr>
+                    <th scope="row" class="text-center">{{forloop.counter}}</th>
+                    <td class="text-center">{{cva.E_email}}</td>
+                    <td class="text-center">{{cva.R_score}} %</td>
+                    <td class="text-center">{{cva.R_prediction}}</td>
+                    <td class="text-center"><a href="{{cva.R_name.resume.url}}" download><i class="fa fa-download"></i></a></td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

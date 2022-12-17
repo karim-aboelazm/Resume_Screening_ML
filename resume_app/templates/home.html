@@ -1,0 +1,205 @@
+<!--
+
+            ------------------------------------------------------------
+            |                   Aknowledgement                         |
+            |----------------------------------------------------------|
+            |   Project Name : Resume Screening Using Machine Learning |
+            |   Coded By : Eng. Karim Mohammed Aboelazm                |
+            |   Organization : Obour University                        |
+            |----------------------------------------------------------|
+-->
+
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+{% include 'snippets/header.html' %}
+<section class="banner_main" id="home">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-7 col-lg-7">
+            <div class="text-bg">
+               <h1>Trusted and <br>Professional Resume Screening</h1>
+               <span>for your Business</span>
+               <p>Check Your Resume And Getting Recommendation Job , Courses And Help Vedios</p>
+               <a href="#resume" class="btn btn-lg" style="color:#032154;background-color:yellow;padding:35px;border-radius: 30px;">Check Resume Now</a>
+            </div>
+         </div>
+         <div class="col-md-5 col-lg-5">
+            <div class="ban_img">
+               <figure><img src="{% static '' %}images/ba_ing.png" alt="#" /></figure>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+{% include 'snippets/about.html' %}
+{% include 'snippets/service.html' %}
+<section id="resume">
+   <div class="container mt-5">
+      <h2 class="text-center mb-5" style="font-size:40px;color:#154492;font-weight:700">Check Your Resume</h2>
+       <div class="row" >
+          <div class="col-md-10 mx-auto" >
+             <form id="main" action="/" method="Post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input-group">
+                   <input type="file" class="form-control" name="resume" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                   <input class="btn btn-success" type="submit" id="inputGroupFileAddon04" value="Upload CV">
+                </div>
+             </form>
+          </div>
+       </div>
+       <div class="row showresult mt-5" id="first">
+           <div class="col-md-10 mx-auto" style="text-align:center ;">
+              <button id="show" class="btn btn-lg mx-auto" style="background:#032154;color:#fff"> Show Analysis Results </button>
+           </div>
+       </div>
+       <div class="container" id="second" style="display:none;">
+            <div class="row">
+               <div class="col-md-10 mx-auto mt-5" >
+                  <iframe type="application/pdf"  id="Iframe1" name="SampleQuestion" src="../media/{{res.resume.name}}" frameborder="1" width="100%"  style="overflow:hidden; width:100%; height: 800px; z-index: 104; left: 4px; ; top: 231px; border-radius:20px;" visible="true" scrolling="no"> </iframe>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-10 mx-auto card mt-5 p-5" style="border-radius: 20px;">
+               <h3 style="text-align: center;font-size:30px ;">- Main Information -</h3>
+               <hr>
+               <ul>
+                  <li style="font-size:20px;margin-bottom: 20px;"><strong>Name    : </strong>{{name}}</li>
+                  <li style="font-size:20px;margin-bottom: 20px;"><strong>Email   : </strong>{{email}}</li>
+                  <li style="font-size:20px;margin-bottom: 20px;"><strong>Phone   : </strong>{{mobile}}</li>
+               </ul>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-10 mx-auto bg-success mt-5" style="opacity:0.6 ;border-radius: 20px;">
+                 <h3 style="text-align:center;padding:20px 0;font-size: 30px;color:#fff;"> In Our Anylsis We Recommend <strong>{{prediction}}</strong> Jobs For You </h3>
+               </div>
+               <div class="col-md-10 mt-5 text-center mx-auto">
+                  <h3 class="mb-5 text-center"><strong style="color:#032154;font-size:25px;">You Can Find More Related Jobs -- </strong></h3>
+                  <a href="https://wuzzuf.net/search/jobs/?q={{prediction}}&a=hpb" class="col-md-10 mt-5 btn-lg p-3 hover" style="background-color:#032154 ; color:#fff;width:100%;" target="_blank">Browse Related Jobs <i class="fa fa-search"></i></a>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-10 mx-auto card mt-5 p-5" style="border-radius: 20px;">
+                  <h3 style="text-align: center;font-size:30px ;">- Your Skills -</h3>
+                  <hr>
+                  <div class="row mt-5">
+                  {% for skill in skills  %}
+                    <span class="col m-3 btn-success p-3" style="width:300px;border-radius: 20px;font-size: 20px;opacity: 0.7;color: #fff;" >{{skill}}</span>
+                  {% endfor %}
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-10 mx-auto card mt-5" style="border-radius: 20px;">
+                  <h3 style="text-align: center;font-size:30px ;padding-top:30px;">- Your Resume Tips -</h3>
+                  <hr>
+                  {% if 'Awesome' in objective %}
+                  <p class="bg-success p-3 hoverable text-light mb-3" style="cursor:pointer;font-size:20px; border-radius: 16px;opacity:0.7;height:100px auto;width:100%;word-wrap: break-word;word-break: break-all;overflow: hidden;">{{objective}}</p>
+                  {% else %}
+                  <p class="bg-danger p-3  hoverable text-light mb-3" style="cursor:pointer;font-size:20px; border-radius: 16px;opacity:0.7;height:100px auto;width:100%;word-wrap: break-word;word-break: break-all;overflow: hidden;">{{objective|slice:"58"}}<br>{{objective|slice:"58:"}}</p>
+                  {% endif %}
+        
+                  {% if 'Awesome' in declaration %}
+                  <p class="bg-success p-3 hoverable text-light mb-3" style="cursor:pointer;font-size:20px; border-radius: 16px;opacity:0.7;height:100px auto;width:100%;word-wrap: break-word;word-break: break-all;overflow: hidden;">{{declaration}}</p>
+                  {% else %}
+                  <p class="bg-danger p-3  hoverable text-light mb-3" style="cursor:pointer;font-size:20px; border-radius: 16px;opacity:0.7;height:100px auto;width:100%;word-wrap: break-word;word-break: break-all;overflow: hidden;">{{declaration|slice:"58"}}<br>{{declaration|slice:"58:"}}</p>
+                  {% endif %}
+                  {% if 'Awesome' in hobbies %}
+                  <p class="bg-success p-3 hoverable text-light mb-3" style="cursor:pointer;font-size:20px; border-radius: 16px;opacity:0.7;height:100px auto;width:100%;word-wrap: break-word;word-break: break-all;overflow: hidden;">{{hobbies}}</p>
+                  {% else %}
+                  <p class="bg-danger p-3  hoverable text-light mb-3" style="cursor:pointer;font-size:20px; border-radius: 16px;opacity:0.7;height:100px auto;width:100%;word-wrap: break-word;word-break: break-all;overflow: hidden;">{{hobbies|slice:"58"}}<br>{{hobbies|slice:"58:"}}</p>
+                  {% endif %}
+        
+                  {% if 'Awesome' in achievements %}
+                  <p class="bg-success p-3 hoverable text-light mb-3" style="cursor:pointer;font-size:20px; border-radius: 16px;opacity:0.7;height:100px auto;width:100%;word-wrap: break-word;word-break: break-all;overflow: hidden;">{{achievements}}</p>
+                  {% else %}
+                  <p class="bg-danger p-3  hoverable text-light mb-3" style="cursor:pointer;font-size:20px; border-radius: 16px;opacity:0.7;height:100px auto;width:100%;word-wrap: break-word;word-break: break-all;overflow: hidden;">{{achievements|slice:"58"}}<br>{{achievements|slice:"58:"}}</p>
+                  {% endif %}
+        
+                  {% if 'Awesome' in projects %}
+                  <p class="bg-success p-3 hoverable text-light mb-3" style="cursor:pointer;font-size:20px; border-radius: 16px;opacity:0.7;height:100px auto;width:100%;word-wrap: break-word;word-break: break-all;overflow: hidden;">{{projects}}</p>
+                  {% else %}
+                  <p class="bg-danger p-3  hoverable text-light mb-3" style="cursor:pointer;font-size:20px; border-radius: 16px;opacity:0.7;height:100px auto;width:100%;word-wrap: break-word;word-break: break-all;overflow: hidden;">{{projects|slice:"58"}}<br>{{projects|slice:"58:"}}</p>
+                  {% endif %}
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-10 mx-auto card mt-5 p-5" style="border-radius: 20px;">
+                  <h3 style="text-align: center;font-size:30px ;">- Your Resume Score -</h3>
+                  <hr>
+                  <strong>Resume Score : </strong> <span class="pull-right">{{resume_score}}%</span>
+                  {% if resume_score < 30 %}
+                  <div class="progress" ><div class="progress-bar bg-danger" role="progressbar" style="width:{{resume_score}}%;" aria-valuenow="{{resume_score}}" aria-valuemin="0" aria-valuemax="100"></div></div>
+                  {% elif resume_score > 30 and resume_score < 60 %}
+                  <div class="progress" ><div class="progress-bar bg-warning" role="progressbar" style="width:{{resume_score}}%;" aria-valuenow="{{resume_score}}" aria-valuemin="0" aria-valuemax="100"></div></div>
+                  {% else %}
+                  <div class="progress" ><div class="progress-bar bg-success" role="progressbar" style="width:{{resume_score}}%;" aria-valuenow="{{resume_score}}" aria-valuemin="0" aria-valuemax="100"></div></div>
+                  {% endif %}
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-10 mx-auto card mt-5 p-5" style="border-radius: 20px;">
+                  <h3 style="text-align: center;font-size:25px ;">- Courses 🎓 Recommendations To Improve Your {{prediction}} Skills -</h3>
+                  <hr>
+            
+                  <div class="row mt-5">
+                     {% for course in courses_list %}
+                     <div class="col-md-12 mx-auto" style="border-radius: 20px;">
+                        <div class="iframely-embed mb-5" style="width:100%;border-radius: 20px;">
+                           <div class="iframely-responsive" style="padding-bottom: 52.5%; padding-top: 120px;width:100%;border-radius: 20px;">
+                              <a href="{{course|slice:"0:-8"}}" data-iframely-url="//iframely.net/{{course|slice:"-7:"}}" style="border-radius: 20px;"></a>
+                           </div>
+                        </div>
+                        <script async src="//iframely.net/embed.js"></script>
+                     </div>
+                     {% endfor %}
+                  </div>
+                  
+               </div>
+               
+            
+            </div>
+            <div class="row" >
+               <div class="col-md-10 mx-auto card mt-5 p-5" style="border-radius: 20px;">
+                  <h3 style="text-align: center;font-size:30px ;">- Videos That Improve Your Resume -</h3>
+                  <hr>
+                  <div class="row mt-5">
+                     {% for course in resume_improve  %}
+                     <div class="col-md-6 mx-auto mb-3">
+                        <iframe width="100%" height="400 auto" src="{{course}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 20px;"></iframe>
+                     </div>
+                     {% endfor %}
+                  </div>               
+               </div>        
+            </div>
+            <div class="row">
+               <div class="col-md-10 mx-auto card mt-5 p-5" style="border-radius: 20px;">
+                  <h3 style="text-align: center;font-size:30px ;">- Videos That Help You In Interview -</h3>
+                  <hr>
+                  <div class="row mt-5">
+                     {% for course in interview_improve  %}
+                     <div class="col-md-6 mx-auto mb-3">
+                        <iframe width="100%" height="400 auto" src="{{course}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 20px;"></iframe>
+                     </div>
+                     {% endfor %}
+                  </div>
+               </div>
+            </div>
+       </div>
+   </div> 
+</section>   
+<script>
+   const box = document.getElementById('second');
+   const btn = document.getElementById('show');
+   btn.addEventListener('click', function handleClick() {
+   if (box.style.display === 'none') {
+      box.style.display = 'block';
+      btn.textContent = 'Hide Result';
+   } else {
+      box.style.display = 'none';
+      btn.textContent = 'Show Result';
+   }
+   }); 
+</script>
+{% endblock content %}
